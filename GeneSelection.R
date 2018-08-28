@@ -28,14 +28,11 @@ values(minus_allTUs)<-m.new.meta
 
 all_TUs_after <- append(plus_allTUs, minus_allTUs)
 
-
-# select ORFs with no overlapping transcriptional unit (on the same strand) 275 nt downstream the PAS
 after_275 <- subset(all_TUs_after, after_gene > 275)
 
 minus_ORFs <- subset(after_275, strand == "-" & type == "ORF-TU")
 plus_ORFs <- subset(after_275, strand == "+" & type == "ORF-TU")
 
-#transcription units were excluded when their PAS overlapped with a region from 250 nt upstream to 500 nt downstream of overlapping genes' PAS.
 plus_250TTS <- GRanges(seqnames = seqnames(plus_ORFs), ranges =IRanges(end(plus_ORFs)-249, end(plus_ORFs)+499), strand = "-", mcols =as.data.frame(values(plus_ORFs)))
 minus_250TTS <- GRanges(seqnames = seqnames(minus_ORFs), ranges =IRanges(start(minus_ORFs)-499, start(minus_ORFs)+249), strand = "+", mcols =as.data.frame(values(minus_ORFs)))
 
